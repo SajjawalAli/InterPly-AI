@@ -1,4 +1,5 @@
 import express from "express"
+import { connectDb } from "./configs/db.js"
 
 const app = express()
 
@@ -10,4 +11,6 @@ app.get("/", (req, res)=>{
 
 app.listen(PORT, ()=>{
     console.log(`Gateway started at ${PORT}`)
+    connectDb()
 })
+
