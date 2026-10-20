@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
         required: true,
         lowercase: true
     },
-    interviewCoins: {
+    interviewCoin: {
         type: Number,
         default: 150
     }
