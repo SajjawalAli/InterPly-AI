@@ -44,3 +44,23 @@ export const GoogleAuth = async (req, res) =>{
         return res.status(500).json("Google Auth error", error)
     }
 }
+
+export const logOut = async () => {
+    try {
+        const sessionId = req.cookie?.session
+        
+        if (sessionId){
+            await redis.del(`session: ${sessionId}`)
+        }
+
+        res.clearCookie("session", {
+            httponly: true,
+            secure: false,
+            sameSite: "strict",
+        })
+
+        return res.status(200).json({success: true, message: "Logout Successful"})
+    } catch (error) {
+        return res.status(500).json({success: false, message: error.message})
+    }
+}
