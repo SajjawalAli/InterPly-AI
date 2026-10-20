@@ -1,6 +1,6 @@
 import { app } from "../configs/firebase.js";
 import {getAuth} from "firebase-admin/auth";
-import User from "../models/user.model.js";
+import {User} from "../models/user.model.js";
 import crypto from "crypto"
 import redis from "../../../shared/redis/redis.js";
 
