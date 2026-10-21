@@ -3,8 +3,24 @@ import { FiX } from "react-icons/fi";
 import { motion } from 'motion/react';
 import { FcGoogle } from "react-icons/fc";
 import { SiFirebase } from "react-icons/si";
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '../utils/firebase';
+import api from '../utils/axios';
 
-function Login({onClose}) {
+function Login({ onClose }) {
+
+    const handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider)
+            const token = await result.user.getIdToken()
+            const response = await api.post("/api/auth/login", {token})
+            onClose()
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md px-4'>
             <div className='relative w-full max-w-sm bg-black/80 backdrop-blur-2xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.25)]'>
@@ -21,11 +37,12 @@ function Login({onClose}) {
 
                     <div className='mt-7'>
                         <motion.button
-                            whileHover={{scale:1.04}}
-                            whileDrag={{scale:0.97}}
+                            onClick={handleGoogleLogin}
+                            whileHover={{ scale: 1.04 }}
+                            whileDrag={{ scale: 0.97 }}
                             className='w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-white/15 bg-white/10 backdrop-blur-md hover:border-white/25 hover:bg-white/[0.14] shadow-inner transition-all'
                         >
-                            <FcGoogle size={18}/>
+                            <FcGoogle size={18} />
                             <span className='text-white font-medium text-sm'>
                                 Continue with Google
                             </span>
@@ -34,7 +51,7 @@ function Login({onClose}) {
                 </div>
                 <div className='flex items-center justify-center gap-1 relative border-t border-white/10 bg-black/30 p-4 text-center'>
                     <p className='text-white/30 text-xs'>Secured authentication powered by Firebase</p>
-                    <SiFirebase color="white" size={15}/> 
+                    <SiFirebase color="white" size={15} />
                 </div>
             </div>
 

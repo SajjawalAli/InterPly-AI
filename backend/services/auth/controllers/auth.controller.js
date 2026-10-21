@@ -15,7 +15,7 @@ export const GoogleAuth = async (req, res) =>{
         })
 
         if (!user){
-            user = User.create({
+            user = await User.create({
                 fireBaseUid: decoded.uid,
                 name: decoded.name,
                 email: decoded.email
@@ -32,7 +32,7 @@ export const GoogleAuth = async (req, res) =>{
         }), "EX", 7 * 24 * 60 * 60)
 
         res.cookie("session", sessionId, {
-            httponly: true,
+            httpOnly: true,
             secure: false,
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000
@@ -45,7 +45,7 @@ export const GoogleAuth = async (req, res) =>{
     }
 }
 
-export const logOut = async () => {
+export const logOut = async (req, res) => {
     try {
         const sessionId = req.cookie?.session
         
@@ -54,7 +54,7 @@ export const logOut = async () => {
         }
 
         res.clearCookie("session", {
-            httponly: true,
+            httpOnly: true,
             secure: false,
             sameSite: "strict",
         })
