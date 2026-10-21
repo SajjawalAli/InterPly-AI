@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from "motion/react"
 import { GiArtificialHive } from "react-icons/gi";
 import { FaArrowRightToBracket } from "react-icons/fa6";
+import Login from '../components/Login';
 
 
 function Home() {
+    const [showLogin, setShowLogin] = useState(false)
+
     return (
         <div className='bg-white text-[#0a0a0a] font-sans min-h-screen overflow-x-hidden'>
             {/* navbar */}
@@ -21,6 +24,7 @@ function Home() {
                 </div>
 
                 <motion.button
+                    onClick={()=>{setShowLogin(true)}}
                     whileHover={{ scale: 1.04 }}
                     whileTap={{ scale: 0.97 }}
                     className='bg-black backdrop-blur-2xl text-white font-semibold border border-white/10 rounded-md px-3 py-1.5 text-xs cursor-pointer transition-all hover:border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.25)] flex items-center gap-2'>
@@ -28,6 +32,11 @@ function Home() {
                 </motion.button>
             </motion.nav>
 
+            {/* main area */}
+            <section className='relative pt-20 pb-14 overflow-hidden bg-[#F8F9FA]'>
+
+            </section>
+            {showLogin && <Login onClose={()=>setShowLogin(false)} />}
         </div>
     )
 }
